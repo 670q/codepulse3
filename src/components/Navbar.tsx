@@ -43,14 +43,8 @@ export const Navbar = () => {
                     }`}>
 
                     {/* Left Side: Logo */}
-                    <a href="#" className="flex items-center gap-2 group">
-                        <div className="relative w-8 h-8 flex items-center justify-center">
-                            <svg viewBox="0 0 24 24" fill="none" className="w-full h-full text-purple-500 group-hover:scale-110 transition-transform duration-300">
-                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                            <div className="absolute inset-0 bg-purple-500/20 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </div>
-                        <span className="font-bold text-lg hidden sm:block tracking-tight text-white group-hover:text-purple-400 transition-colors">
+                    <a href="#" className="flex items-center gap-2 group mr-2 sm:mr-4">
+                        <span className="font-bold text-xl tracking-wider text-white group-hover:text-purple-400 transition-colors drop-shadow-[0_0_8px_rgba(168,85,247,0.5)]">
                             {t.hero.codePulse}
                         </span>
                     </a>
