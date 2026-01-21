@@ -12,9 +12,9 @@ interface HeroProps {
 
 export const Hero = ({ textureUrl, fileInputRef, handleFileChange, triggerFileInput }: HeroProps) => {
     return (
-        <section id="hero" className="relative w-full min-h-[100vh] flex items-center pt-24 md:pt-0 overflow-hidden">
+        <section id="hero" className="relative w-full min-h-[100dvh] flex items-center pt-24 md:pt-0 overflow-hidden">
             {/* 3D Background */}
-            <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 z-0" style={{ touchAction: 'pan-y' }}>
                 <Canvas
                     camera={{ position: [0, 0, 5], fov: 45 }}
                     shadows
@@ -28,8 +28,8 @@ export const Hero = ({ textureUrl, fileInputRef, handleFileChange, triggerFileIn
             </div>
 
             {/* Hero Content */}
-            <div className="relative z-10 w-full h-full px-6 sm:px-12 pointer-events-none flex flex-col md:flex-row items-center justify-center md:justify-start">
-                <div className="w-full md:w-1/2 space-y-8 text-center md:text-right mt-32 md:mt-0">
+            <div className="relative z-10 w-full h-full px-6 sm:px-12 pointer-events-none flex flex-col md:flex-row items-center justify-center md:justify-start pb-20 md:pb-0">
+                <div className="w-full md:w-1/2 space-y-8 text-center md:text-right mt-32 md:mt-0 pointer-events-auto">
                     <motion.h1
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}

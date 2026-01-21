@@ -32,6 +32,9 @@ const PhoneScreen = ({ textureUrl }: { textureUrl: string | null }) => {
     )
 }
 
+// Preload the default logo texture
+useTexture.preload('/default_logo.png')
+
 const PulsingLogo = () => {
     const texture = useTexture('/default_logo.png')
     const meshRef = useRef<THREE.Mesh>(null)

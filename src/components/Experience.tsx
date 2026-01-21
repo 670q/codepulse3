@@ -55,7 +55,11 @@ export const Experience = ({ textureUrl }: ExperienceProps) => {
                 color="#a855f7"
             />
 
-            <OrbitControls makeDefault enableZoom={false} enablePan={false} />
+            <OrbitControls
+                makeDefault
+                enableZoom={false}
+                enablePan={false}
+            />
         </>
     )
 }
