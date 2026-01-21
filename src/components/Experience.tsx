@@ -42,8 +42,8 @@ export const Experience = ({ textureUrl }: ExperienceProps) => {
                 >
                     <Phone textureUrl={textureUrl} />
                 </Float>
-                <Sparkles count={40} scale={5} size={4} speed={0.4} opacity={0.4} color="#a855f7" />
-                <Sparkles count={20} scale={4} size={2} speed={0.2} opacity={0.2} color="#ffffff" />
+                <Sparkles count={20} scale={5} size={4} speed={0.4} opacity={0.4} color="#a855f7" />
+                <Sparkles count={10} scale={4} size={2} speed={0.2} opacity={0.2} color="#ffffff" />
             </group>
 
             <ContactShadows
@@ -52,6 +52,7 @@ export const Experience = ({ textureUrl }: ExperienceProps) => {
                 scale={10}
                 blur={2}
                 far={4}
+                frames={1}
                 color="#a855f7"
             />
 

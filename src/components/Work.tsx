@@ -2,10 +2,10 @@ import { motion } from 'framer-motion'
 import { SectionTitle } from './SectionTitle'
 
 const projects = [
-    { title: "Financial Dashboard", category: "Web App", image: "/images/financial.png" },
-    { title: "E-Commerce Mobile App", category: "Mobile App", image: "/images/ecommerce.png" },
-    { title: "AI Image Generator", category: "SaaS", image: "/images/ai-gen.png" },
-    { title: "Smart Home Controller", category: "IoT", image: "/images/iot.png" }
+    { title: "Financial Dashboard", category: "Web App", image: "/images/financial.webp" },
+    { title: "E-Commerce Mobile App", category: "Mobile App", image: "/images/ecommerce.webp" },
+    { title: "AI Image Generator", category: "SaaS", image: "/images/ai-gen.webp" },
+    { title: "Smart Home Controller", category: "IoT", image: "/images/iot.webp" }
 ]
 
 export const Work = () => {
@@ -40,6 +40,8 @@ export const Work = () => {
                             <img
                                 src={project.image}
                                 alt={project.title}
+                                loading="lazy"
+                                decoding="async"
                                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                             />
 
