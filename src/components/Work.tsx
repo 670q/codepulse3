@@ -1,14 +1,17 @@
 import { motion } from 'framer-motion'
 import { SectionTitle } from './SectionTitle'
+import { useLanguage } from '../contexts/LanguageContext'
 
-const projects = [
-    { title: "Financial Dashboard", category: "Web App", image: "/images/financial.webp" },
-    { title: "E-Commerce Mobile App", category: "Mobile App", image: "/images/ecommerce.webp" },
-    { title: "AI Image Generator", category: "SaaS", image: "/images/ai-gen.webp" },
-    { title: "Smart Home Controller", category: "IoT", image: "/images/iot.webp" }
+const projectImages = [
+    "/images/project1.webp",
+    "/images/project2.webp",
+    "/images/project3.webp",
+    "/images/iot.webp"
 ]
 
 export const Work = () => {
+    const { t } = useLanguage()
+
     return (
         <section id="work" className="relative z-10 py-32 px-6 bg-[#0a0a0a] overflow-hidden">
             {/* Background decorative elements */}
@@ -20,14 +23,14 @@ export const Work = () => {
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
                     <SectionTitle
-                        title="أحدث أعمالنا"
-                        subtitle="معرض المشاريع"
-                        className="mb-0 text-right w-full md:w-auto"
+                        title={t.work.title}
+                        subtitle={t.work.subtitle}
+                        className="mb-0 text-start w-full md:w-auto"
                     />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {projects.map((project, idx) => (
+                    {t.work.projects.map((project, idx) => (
                         <motion.div
                             key={idx}
                             initial={{ opacity: 0, scale: 0.95 }}
@@ -38,7 +41,7 @@ export const Work = () => {
                         >
                             {/* Project Image */}
                             <img
-                                src={project.image}
+                                src={projectImages[idx]}
                                 alt={project.title}
                                 loading="lazy"
                                 decoding="async"

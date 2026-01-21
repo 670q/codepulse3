@@ -1,83 +1,127 @@
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion'
+import { useLanguage } from '../contexts/LanguageContext'
 
 export const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false)
+    const { scrollY } = useScroll()
+    const [hidden, setHidden] = useState(false)
     const [scrolled, setScrolled] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
+    const { t, toggleLanguage, language } = useLanguage()
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 50)
+    useMotionValueEvent(scrollY, "change", (latest) => {
+        const previous = scrollY.getPrevious() ?? 0
+        if (latest > previous && latest > 150) {
+            setHidden(true)
+        } else {
+            setHidden(false)
         }
-        window.addEventListener('scroll', handleScroll)
-        return () => window.removeEventListener('scroll', handleScroll)
-    }, [])
+        setScrolled(latest > 50)
+    })
+
+    const navLinks = [
+        { name: t.nav.services, href: "#services" },
+        { name: t.nav.work, href: "#work" },
+        { name: t.nav.contact, href: "#contact" }
+    ]
 
     return (
         <>
             <motion.nav
-                initial={{ y: -100 }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className={`fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 py-4 transition-all duration-500 ${scrolled ? 'bg-black/80 backdrop-blur-xl border-b border-white/5 py-3' : 'bg-transparent py-5'}`}
+                variants={{
+                    visible: { y: 0 },
+                    hidden: { y: -100 }
+                }}
+                animate={hidden ? "hidden" : "visible"}
+                transition={{ duration: 0.35, ease: "easeInOut" }}
+                className={`fixed top-0 left-0 right-0 z-50 flex justify-center items-center p-4 pointer-events-none transition-colors duration-300 ${scrolled ? 'py-4' : 'py-6'
+                    }`}
             >
-                <div className="flex items-center gap-3 cursor-pointer group">
-                    <div className="text-2xl font-bold tracking-wider">
-                        <span className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">CODE</span>
-                        <span className="text-purple-500 drop-shadow-[0_0_8px_rgba(168,85,247,0.5)] ml-2">PULSE</span>
+                <div className={`pointer-events-auto flex items-center justify-between gap-2 sm:gap-4 px-4 py-3 rounded-full border transition-all duration-300 ${scrolled
+                    ? 'bg-black/80 border-white/10 backdrop-blur-md shadow-lg shadow-purple-500/10'
+                    : 'bg-transparent border-transparent'
+                    }`}>
+
+                    {/* Left Side: Logo */}
+                    <a href="#" className="flex items-center gap-2 group">
+                        <div className="relative w-8 h-8 flex items-center justify-center">
+                            <svg viewBox="0 0 24 24" fill="none" className="w-full h-full text-purple-500 group-hover:scale-110 transition-transform duration-300">
+                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                            <div className="absolute inset-0 bg-purple-500/20 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </div>
+                        <span className="font-bold text-lg hidden sm:block tracking-tight text-white group-hover:text-purple-400 transition-colors">
+                            {t.hero.codePulse}
+                        </span>
+                    </a>
+
+                    {/* Middle: Desktop Links */}
+                    <div className="hidden md:flex items-center gap-1 mx-2">
+                        {navLinks.map((link) => (
+                            <a
+                                key={link.name}
+                                href={link.href}
+                                className="px-4 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-all"
+                            >
+                                {link.name}
+                            </a>
+                        ))}
+                    </div>
+
+                    {/* Right Side: Actions */}
+                    <div className="flex items-center gap-2">
+                        {/* Language Switcher */}
+                        <button
+                            onClick={toggleLanguage}
+                            className="px-3 py-1 text-sm font-bold text-white/50 hover:text-purple-400 transition-colors uppercase"
+                        >
+                            {language === 'ar' ? 'EN' : 'AR'}
+                        </button>
+
+                        {/* CTA Button (Desktop) */}
+                        <a
+                            href="#contact"
+                            className="hidden sm:flex items-center gap-2 px-5 py-2.5 bg-white text-black text-sm font-bold rounded-full hover:bg-purple-50 transition-all transform hover:scale-105"
+                        >
+                            <span>{t.nav.cta}</span>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                                <polyline points="12 5 19 12 12 19" />
+                            </svg>
+                        </a>
+
+                        {/* Mobile Menu Toggle */}
+                        <button
+                            onClick={() => setIsOpen(!isOpen)}
+                            className="md:hidden p-2 text-white/80 hover:text-white z-50 relative"
+                            aria-label="Toggle Menu"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                {isOpen ? (
+                                    <>
+                                        <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </>
+                                ) : (
+                                    <>
+                                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                                    </>
+                                )}
+                            </svg>
+                        </button>
                     </div>
                 </div>
-
-                {/* Desktop Menu */}
-                <div className="hidden md:flex gap-8">
-                    {[
-                        { label: 'الرئيسية', href: '#hero' },
-                        { label: 'خدماتنا', href: '#services' },
-                        { label: 'أعمالنا', href: '#work' },
-                    ].map((item) => (
-                        <a
-                            key={item.label}
-                            href={item.href}
-                            className="relative text-sm font-medium text-white/60 hover:text-white transition-colors py-2"
-                        >
-                            {item.label}
-                            {/* Hover underline effect usually requires grouping or layoutId, simplified here */}
-                        </a>
-                    ))}
-                </div>
-
-                {/* Contact Button (Desktop) */}
-                <motion.a
-                    href="https://wa.me/message/K3AEW6WKCK37L1"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="hidden md:block px-6 py-2.5 bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 rounded-full text-white text-xs font-bold transition-all"
-                >
-                    تواصل معنا
-                </motion.a>
-
-                {/* Mobile Hamburger Button */}
-                <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="md:hidden p-2 text-white/80 hover:text-white z-50 relative"
-                    aria-label="Toggle Menu"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        {isOpen ? (
-                            <>
-                                <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
-                            </>
-                        ) : (
-                            <>
-                                <line x1="3" y1="12" x2="21" y2="12"></line>
-                                <line x1="3" y1="6" x2="21" y2="6"></line>
-                                <line x1="3" y1="18" x2="21" y2="18"></line>
-                            </>
-                        )}
-                    </svg>
-                </button>
             </motion.nav>
 
             {/* Mobile Menu Overlay */}
@@ -90,13 +134,9 @@ export const Navbar = () => {
                         transition={{ duration: 0.3 }}
                         className="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl md:hidden flex flex-col items-center justify-center gap-8"
                     >
-                        {[
-                            { label: 'الرئيسية', href: '#hero' },
-                            { label: 'خدماتنا', href: '#services' },
-                            { label: 'أعمالنا', href: '#work' },
-                        ].map((item, idx) => (
+                        {navLinks.map((item, idx) => (
                             <motion.a
-                                key={item.label}
+                                key={item.name}
                                 href={item.href}
                                 onClick={() => setIsOpen(false)}
                                 initial={{ opacity: 0, y: 20 }}
@@ -104,21 +144,19 @@ export const Navbar = () => {
                                 transition={{ delay: 0.1 * idx }}
                                 className="text-3xl font-bold text-white hover:text-purple-400 transition-colors"
                             >
-                                {item.label}
+                                {item.name}
                             </motion.a>
                         ))}
 
                         <motion.a
-                            href="https://wa.me/message/K3AEW6WKCK37L1"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            href="#contact"
                             onClick={() => setIsOpen(false)}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3 }}
                             className="mt-4 px-8 py-3 bg-purple-600 text-white font-bold rounded-full hover:bg-purple-700 transition-all shadow-[0_0_20px_rgba(168,85,247,0.4)]"
                         >
-                            تواصل معنا
+                            {t.nav.contact}
                         </motion.a>
                     </motion.div>
                 )}
