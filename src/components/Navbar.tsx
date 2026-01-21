@@ -44,9 +44,10 @@ export const Navbar = () => {
 
                     {/* Left Side: Logo */}
                     <a href="#" className="flex items-center gap-2 group mr-2 sm:mr-4">
-                        <span className="font-bold text-xl tracking-wider text-white group-hover:text-purple-400 transition-colors drop-shadow-[0_0_8px_rgba(168,85,247,0.5)]">
-                            {t.hero.codePulse}
-                        </span>
+                        <div className="text-xl sm:text-2xl font-bold tracking-wider">
+                            <span className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">CODE</span>
+                            <span className="text-purple-500 drop-shadow-[0_0_8px_rgba(168,85,247,0.5)] ml-2">PULSE</span>
+                        </div>
                     </a>
 
                     {/* Middle: Desktop Links */}
