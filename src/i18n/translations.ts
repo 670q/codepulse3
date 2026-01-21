@@ -30,9 +30,8 @@ export const translations = {
             subtitle: "معرض المشاريع",
             projects: [
                 { title: "لوحة تحكم مالية", category: "تطبيق ويب" },
-                { title: "متجر إلكتروني", category: "تطبيق جوال" },
-                { title: "تطبيق المنزل الذكي", category: "انترنت الأشياء" },
-                { title: "تحكم بالمنازل الذكية", category: "انترنت الأشياء" }
+                { title: "تطبيق مود شيفت", category: "تطبيق جوال" },
+                { title: "تطبيق المنزل الذكي", category: "انترنت الأشياء" }
             ]
         },
         contact: {
@@ -75,9 +74,8 @@ export const translations = {
             subtitle: "Project Showcase",
             projects: [
                 { title: "Financial Dashboard", category: "Web App" },
-                { title: "E-Commerce App", category: "Mobile App" },
-                { title: "Smart Home App", category: "IoT" },
-                { title: "Smart Home", category: "IoT" }
+                { title: "MoodShift App", category: "Mobile App" },
+                { title: "Smart Home App", category: "IoT" }
             ]
         },
         contact: {

@@ -4,9 +4,8 @@ import { useLanguage } from '../contexts/LanguageContext'
 
 const projectImages = [
     "/images/project1.webp",
-    "/images/project2.webp",
-    "/images/project3.webp",
-    "/images/iot.webp"
+    "/images/mood-shift.webp",
+    "/images/project3.webp"
 ]
 
 export const Work = () => {
